@@ -18,6 +18,7 @@ public class PlayerCombatController : MonoBehaviour
     private bool isInCombat = false;
     private bool isSpellCasting = false;
     //private Weapon currentWeapon? otherwise, Weapon will be dependent on the combatController
+    private PlayerDamageHandler playerDamageHandler;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class PlayerCombatController : MonoBehaviour
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
+        playerDamageHandler = GetComponent<PlayerDamageHandler>();
         weaponGameObject.SetActive(false);
     }
 
@@ -63,6 +65,7 @@ public class PlayerCombatController : MonoBehaviour
             if(Physics.Raycast(ray, out hitInfo, attackRange, attackableLayer)) 
             {
                 Debug.Log("Attacked " + hitInfo.collider.gameObject.name);
+                StartCoroutine(DealDamage(hitInfo));
             }
             else 
             {
@@ -93,9 +96,13 @@ public class PlayerCombatController : MonoBehaviour
         }
     }
 
-    private IEnumerator DealDamage() 
+    private IEnumerator DealDamage(RaycastHit hitInfo) 
     {
         yield return new WaitForSeconds(.4f);
+        if(hitInfo.collider.gameObject.tag == "Enemy") 
+        {
+            //hitInfo.collider.gameObject.GetComponent<NPCStats>().DealDamage(playerDamageHandler.TotalDamageAmount());
+        }
     }
 
     //spellcasting controls
