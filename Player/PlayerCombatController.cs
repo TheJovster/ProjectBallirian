@@ -93,6 +93,11 @@ public class PlayerCombatController : MonoBehaviour
         }
     }
 
+    private IEnumerator DealDamage() 
+    {
+        yield return new WaitForSeconds(.4f);
+    }
+
     //spellcasting controls
 
     private void ToggleSpellcasting()
