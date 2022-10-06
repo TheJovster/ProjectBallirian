@@ -39,9 +39,20 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K)) 
+        if (Input.GetKeyDown(KeyCode.K))
         {
             TESTDamagePlayer();
+        }
+        PlayerLifeStateCheck();
+
+    }
+
+    private void PlayerLifeStateCheck()
+    {
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            PlayerDeathHandler();
         }
     }
 
@@ -101,11 +112,6 @@ public class PlayerStats : MonoBehaviour
     public void TakeDamage(int damageToTake) 
     {
         currentHealth -= damageToTake;
-        if(currentHealth <= 0) 
-        {
-            currentHealth = 0;
-            PlayerDeathHandler();
-        }
     }
 
     private void PlayerDeathHandler() 
